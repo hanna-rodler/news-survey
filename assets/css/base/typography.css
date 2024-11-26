@@ -1,0 +1,26 @@
+h1 {
+  @apply text-3xl text-primary font-bold;
+}
+
+h2 {
+  @apply text-xl md:text-2xl text-black font-bold mb-4;
+}
+
+h3 {
+  @apply text-base md:text-lg text-black font-bold;
+}
+
+.text {
+  @apply my-3;
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #004683, #247caf);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-headline {
+  /* @apply bg-gradient-to-r from-primary to-info text-4xl font-bold; */
+  @apply font-bold text-5xl leading-[3rem] py-3 my-2 text-gradient;
+}

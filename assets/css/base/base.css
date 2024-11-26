@@ -1,0 +1,10 @@
+/* @import "reset.css"; */
+
+html,
+body {
+  @apply font-sans h-full scroll-smooth text-black bg-white;
+}
+
+.primary-gradient {
+  @apply bg-gradient-to-r from-primary to-info;
+}
