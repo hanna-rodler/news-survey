@@ -13,7 +13,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   level: "div" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-  levelStyle?: "gradient-headline";
+  levelStyle?: "gradient-headline" | "secondary-gradient-headline";
   iconName?: string;
   iconColor?: string;
 }>();

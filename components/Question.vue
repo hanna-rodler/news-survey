@@ -1,6 +1,6 @@
 <template>
-  <div class="pb-10">
-    <AtomsHeadline :level="'h2'">{{ content.question }}</AtomsHeadline>
+  <div class="pb-10" :data-question-id="content.id">
+    <AtomsHeadline :level="'h3'">{{ content.question }}</AtomsHeadline>
     <div class="space-y-5 md:grid md:grid-cols-3 md:gap-x-3 md:space-y-0">
       <Card
         :content="content.soft_summary"

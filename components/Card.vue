@@ -1,23 +1,23 @@
 <template>
   <div
-    class="border-2 bg-white shadow-md p-4 flex flex-col justify-between"
+    class="form-card border-2 bg-white shadow-lg p-4 flex flex-col justify-between"
     :data-summary-type="type"
-    :data-question-id="id"
     :class="getBorderColor"
+    :data-id="id"
     :style="getOrder"
   >
     <div>
-      <AtomsHeadline v-if="!isQuestionSelected" :level="'h3'">{{
+      <AtomsHeadline v-if="!isQuestionSelected" :level="'h4'">{{
         content.headline
       }}</AtomsHeadline>
       <AtomsHeadline
         v-if="isQuestionSelected"
-        :level="'h3'"
+        :level="'h4'"
         :icon-name="'heroicons:check-circle-20-solid'"
         :icon-color="'bg-success'"
         >{{ content.headline }}</AtomsHeadline
       >
-      <AtomsText :text="content.text"></AtomsText>
+      <AtomsText>{{ content.text }}</AtomsText>
     </div>
     <div class="flex justify-end pt-4">
       <AtomsButton
@@ -44,11 +44,11 @@ const props = defineProps<{
 }>();
 
 const isQuestionSelected = computed(() => {
-  return surveyResponse.value[props.id].selectedSummary === props.type;
+  return surveyResponse.value.articles[props.id].selectedSummary === props.type;
 });
 
 const buttonVariant = computed(() => {
-  if (surveyResponse.value[props.id].selectedSummary === props.type) {
+  if (surveyResponse.value.articles[props.id].selectedSummary === props.type) {
     return "success";
   } else {
     return "secondary";
@@ -56,7 +56,7 @@ const buttonVariant = computed(() => {
 });
 
 const getButtonText = computed(() => {
-  if (surveyResponse.value[props.id].selectedSummary === props.type) {
+  if (surveyResponse.value.articles[props.id].selectedSummary === props.type) {
     return "Ausgewählt";
   } else {
     return "Auswählen";
@@ -64,10 +64,10 @@ const getButtonText = computed(() => {
 });
 
 const getBorderColor = computed(() => {
-  if (surveyResponse.value[props.id].selectedSummary === props.type) {
+  if (surveyResponse.value.articles[props.id].selectedSummary === props.type) {
     return "border-success";
   } else {
-    return "border-primary rounded-md";
+    return "border-info rounded-md";
   }
 });
 
@@ -78,8 +78,11 @@ const getOrder = computed(() => {
 });
 
 const selectCard = () => {
+  const question = document.querySelector(`[data-question-id='${props.id}']`);
+  question?.classList.remove("form-error");
   const selectedCard = props.id + props.type;
-  surveyResponse.value[props.id].selectedSummary = props.type;
-  console.log("survey id", props.id, surveyResponse.value[props.id]);
+  surveyResponse.value.articles[props.id].selectedSummary = props.type;
+  surveyResponse.value.articles[props.id].id = props.id;
+  console.log("survey id", props.id, surveyResponse.value.articles[props.id]);
 };
 </script>
