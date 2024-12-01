@@ -13,6 +13,11 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {},
-    private: {},
+    private: {
+      MONGO_DB_URL_END: process.env.MONGO_DB_URL_END,
+      MONGO_DB_URL_START: process.env.MONGO_DB_URL_START,
+      MONGO_DB_USER: process.env.MONGO_DB_USER,
+      MONGO_DB_PW: process.env.MONGO_DB_PW,
+    },
   },
 });

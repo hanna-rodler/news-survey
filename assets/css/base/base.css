@@ -8,3 +8,7 @@ body {
 .primary-gradient {
   @apply bg-gradient-to-r from-primary to-info;
 }
+
+.section {
+  @apply bg-white rounded-md p-3 sm:p-5 mb-10;
+}

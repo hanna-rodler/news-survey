@@ -1,6 +1,23 @@
 <template>
-  <div class="pb-10" :data-question-id="content.id">
-    <AtomsHeadline :level="'h3'">{{ content.question }}</AtomsHeadline>
+  <div
+    class="mb-20 flex flex-col bg-white rounded-md p-5"
+    :data-question-id="content.id"
+  >
+    <div class="flex flex-row justify-center">
+      <AtomsHeadline :level="'h3'" class="max-w-4xl"
+        >Sie haben angegeben im Moment
+        <em>{{ getCapacityDescription }}</em> emotionale Kapaztität für
+        politische Nachrichten. Welche der drei Artikelversionen passt am Besten
+        zu dieser emotionalen Kapazität? *</AtomsHeadline
+      >
+    </div>
+    <div
+      class="hidden error-msg text-center italic mb-5 flex items-center justify-center"
+      :data-question-id="content.id"
+    >
+      <Icon name="heroicons:exclamation-triangle" size="18" class="mr-2" />
+      <span>Bitte diese Frage ausfüllen</span>
+    </div>
     <div class="space-y-5 md:grid md:grid-cols-3 md:gap-x-3 md:space-y-0">
       <Card
         :content="content.soft_summary"
@@ -21,11 +38,75 @@
         :order="randomizedOrder[1]"
       ></Card>
     </div>
+    <div class="mt-8 text-center">
+      <div class="mb-2">
+        <div class="font-medium">
+          <label for="interest">
+            Wie sehr interessiert Sie das Thema des Artikels? *
+          </label>
+        </div>
+        <div
+          class="text-small flex items-center justify-center"
+          v-if="interest === -1"
+        >
+          <Icon name="heroicons:exclamation-triangle" size="18" class="mr-2" />
+          <span>Bitte auswählen</span>
+        </div>
+      </div>
+      <div class="flex flex-row justify-center">
+        <span class="mr-4">sehr wenig</span>
+        <div class="w-60">
+          <input
+            type="range"
+            min="0"
+            max="4"
+            class="range range-info"
+            :class="{ 'range-error': interest === -1 }"
+            step="1"
+            id="interest"
+            name="interest"
+            v-model="interest"
+            @click="chooseInterest"
+          />
+          <div class="flex w-full justify-between px-2 text-xs">
+            <span>|</span>
+            <span>|</span>
+            <span>|</span>
+            <span>|</span>
+            <span>|</span>
+          </div>
+        </div>
+        <span class="ml-4">sehr viel</span>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { Question } from "~/types/question.type";
+import type {
+  emotionalCapacity,
+  interest,
+  surveyResponseType,
+} from "~/types/survey.type";
+
+const emotionalCapacity = useState<emotionalCapacity>("emotionalCapacity");
+const surveyResponse = useState<surveyResponseType>("surveyResponse");
+const interest = ref<interest>(-1);
+
+console.log("interest", interest.value);
+
+const capacityMapper = new Map([
+  [0, "sehr wenig"],
+  [1, "wenig"],
+  [2, "eine mittlere"],
+  [3, "viel"],
+  [4, "sehr viel"],
+]);
+
+const getCapacityDescription = computed(() => {
+  return capacityMapper.get(Number(emotionalCapacity.value));
+});
 
 const props = defineProps<{
   content: Question;
@@ -41,4 +122,13 @@ const randomizedOrder = computed(() => {
   const ranOrders = [rand1, rand2, rand3];
   return ranOrders;
 });
+
+const chooseInterest = () => {
+  if (interest.value === -1) {
+    interest.value = 0;
+  }
+  surveyResponse.value.articles[props.content.id].interest = Number(
+    interest.value
+  );
+};
 </script>

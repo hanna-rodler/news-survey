@@ -1,46 +1,57 @@
 <template>
-  <div>
-    <div>
+  <div class="max-w-7xl">
+    <div class="section">
       <AtomsHeadline level="h1" class="text-center mb-4"
-        >Umfrage Titel</AtomsHeadline
+        >News Umfrage Titel</AtomsHeadline
       >
       <AtomsText class="text-center"
-        >Ufmrage Einführungstext - Erklärung was kommt</AtomsText
+        >Ufmrage Einführungstext - Erklärung was kommt. Was beinhaltet
+        politisch?</AtomsText
       >
     </div>
-    <Demographics class="mb-8"></Demographics>
-    <AtomsHeadline level="h2"
-      >Emotionale Kapazität & Artikelversionen</AtomsHeadline
-    >
-    <div class="flex flex-col mb-8">
-      <label for="emotionalCapacity" class="h3"
-        ><AtomsHeadline level="h3"
-          >Wie viel emotionale Kapazität haben Sie gerade, um mit Nachrichten
-          umzugehen?:</AtomsHeadline
-        ></label
+    <Demographics></Demographics>
+    <div class="section">
+      <AtomsHeadline level="h2"
+        >Emotionale Kapazität & Artikelversionen</AtomsHeadline
       >
-      <div class="flex flex-row justify-center">
-        <span class="mr-4 text-bold">sehr wenig</span>
-        <div class="w-60">
-          <input
-            type="range"
-            min="0"
-            max="100"
-            class="range range-info"
-            step="25"
-            id="emotionalCapacity"
-            name="emotionalCapacity"
-            v-model="emotionalCapacity"
-          />
-          <div class="flex w-full justify-between px-2 text-xs">
-            <span>|</span>
-            <span>|</span>
-            <span>|</span>
-            <span>|</span>
-            <span>|</span>
-          </div>
+      <div class="flex flex-col mb-8">
+        <label for="emotionalCapacity" class="flex flex-row justify-center"
+          ><AtomsHeadline level="h3"
+            >Wie viel emotionale Kapazität haben Sie gerade, um mit politischen
+            Nachrichten umzugehen? *</AtomsHeadline
+          ></label
+        >
+        <div
+          class="text-small text-center mb-2"
+          v-if="emotionalCapacity === -1"
+        >
+          Bitte auswählen
         </div>
-        <span class="ml-4 text-bold">sehr viel</span>
+        <div class="flex flex-row justify-center">
+          <span class="mr-4 text-bold">sehr wenig</span>
+          <div class="w-60">
+            <input
+              type="range"
+              min="0"
+              max="4"
+              class="range range-primary"
+              :class="{ 'range-error': emotionalCapacity === -1 }"
+              step="1"
+              id="emotionalCapacity"
+              name="emotionalCapacity"
+              v-model="emotionalCapacity"
+              @click="chooseEmotionalCapacity"
+            />
+            <div class="flex w-full justify-between px-2 text-xs">
+              <span>|</span>
+              <span>|</span>
+              <span>|</span>
+              <span>|</span>
+              <span>|</span>
+            </div>
+          </div>
+          <span class="ml-4 text-bold">sehr viel</span>
+        </div>
       </div>
     </div>
 
@@ -64,6 +75,7 @@
 <script setup lang="ts">
 import surveyData from "~/contents/survey.json";
 import { v4 as uuidv4 } from "uuid";
+
 import type {
   surveyResponseType,
   gender,
@@ -72,21 +84,17 @@ import type {
   articleSelection,
 } from "~/types/survey.type";
 
-console.log("payload", useNuxtApp().payload.data);
-console.log("shuffled payload", useNuxtApp().payload.data.shuffled);
 let shuffledData = useNuxtApp().payload.data.shuffled;
 
 if (shuffledData == undefined) {
-  console.log("shuffle array data");
   shuffledData = shuffleArray(surveyData);
   useNuxtApp().payload.data.shuffled = shuffledData;
-  console.log(
-    "payload after adding shuffled",
-    useNuxtApp().payload.data.shuffled
-  );
 }
 
-const emotionalCapacity = ref<emotionalCapacity>(50);
+const emotionalCapacity = useState<emotionalCapacity>(
+  "emotionalCapacity",
+  () => -1
+);
 const gender = useState<gender>("gender");
 const age = useState<age>("age");
 
@@ -94,8 +102,13 @@ const isValid = computed(() => {
   return checkValidity(false);
 });
 
+const chooseEmotionalCapacity = () => {
+  if (emotionalCapacity.value === -1) {
+    emotionalCapacity.value = 0;
+  }
+};
+
 const userId = useState("userId", () => uuidv4());
-console.log("userId survey", userId.value);
 
 function shuffleArray<T>(array: T[]): T[] {
   // Create a copy of the array to avoid mutating the original array
@@ -114,14 +127,13 @@ function shuffleArray<T>(array: T[]): T[] {
   return shuffledArray;
 }
 
-console.log("payload", useNuxtApp().payload.data);
-
 function getReducedData(): [articleSelection] {
   const reducedData = [];
   for (let i = 0; i < shuffledData.length; i++) {
     reducedData[shuffledData[i].id] = {
       id: shuffledData[i].id,
       selectedSummary: "",
+      interest: -1,
     };
   }
   return reducedData;
@@ -132,27 +144,41 @@ const responseScheme: surveyResponseType = {
   age: age.value,
   gender: gender.value,
   emotionalCapacity: emotionalCapacity.value,
-  id: userId,
+  userId: userId.value,
 };
 
-console.log("survey scheme articles", responseScheme.articles);
-
-const surveyResponse = useState(
+const surveyResponse = useState<surveyResponseType>(
   "surveyResponse",
   (): surveyResponseType => responseScheme
 );
 
 const submitForm = () => {
-  console.log("emotional Capacity", emotionalCapacity.value);
   surveyResponse.value.age = age.value;
   surveyResponse.value.gender = gender.value;
   surveyResponse.value.emotionalCapacity = emotionalCapacity.value;
-  console.log("surveyResponse", surveyResponse.value);
+
   const submitValid = checkValidity(true);
   if (submitValid) {
-    navigateTo("./success");
+    console.log("surveyResponse", surveyResponse);
+    saveToDB();
   } else {
     console.error("errors occured");
+  }
+};
+
+const saveToDB = async () => {
+  const { data, error: fetchError } = await useFetch(
+    "/api/saveSurveyResponse",
+    {
+      method: "POST",
+      body: surveyResponse.value,
+    }
+  );
+  if (data.value) {
+    console.log("successful. redirect");
+    navigateTo("./success");
+  } else {
+    console.error("Unsuccessful. Error:", fetchError.value);
   }
 };
 
@@ -161,31 +187,44 @@ function checkValidity(showErrors: boolean) {
     age: false,
     gender: false,
     articles: false,
+    emotionalCapacity: false,
   };
   // validate age
   const ageInput = document.querySelector("input[name='age']");
-  if (age.value === "") {
+  const ageErrorIcon = document.querySelector("[data-error-icon='age']");
+  console.log("age error", ageErrorIcon);
+  if (age.value === "" || age.value < 5 || age.value > 120) {
     if (showErrors) {
       ageInput?.classList.remove("input-info");
       ageInput?.classList.add("input-error");
+      ageErrorIcon?.classList.remove("hidden");
     }
   } else {
     validity.age = true;
     ageInput?.classList.remove("input-error");
     ageInput?.classList.add("input-info");
+    ageErrorIcon?.classList.add("hidden");
   }
 
   // validate gender
   const selectGender = document.querySelector("select[name='gender']");
+  const genderErrorIcon = document.querySelector("[data-error-icon='gender']");
   if (gender.value === "") {
     if (showErrors) {
       selectGender?.classList.remove("select-info");
       selectGender?.classList.add("select-error");
+      genderErrorIcon?.classList.remove("hidden");
     }
   } else {
     selectGender?.classList.add("select-info");
     selectGender?.classList.remove("select-error");
+    genderErrorIcon?.classList.add("hidden");
     validity.gender = true;
+  }
+
+  if (emotionalCapacity.value !== -1) {
+    validity.emotionalCapacity = true;
+    // info: if selected is already shown for range
   }
 
   // validate articles
@@ -197,8 +236,17 @@ function checkValidity(showErrors: boolean) {
         console.log("question i", i, " is missing: ", articles[i]);
         const question = document.querySelector(`[data-question-id='${i}']`);
         question?.classList.add("form-error");
+        const errorMsg = document.querySelector(
+          `[data-question-id='${i}'].error-msg`
+        );
+        errorMsg?.classList.remove("hidden");
       }
       articlesValid = false;
+    }
+    if (articles[i].interest === -1) {
+      articlesValid = false;
+      console.log("question i", i, "has no selected intterest");
+      // info: if selected is already shown for range
     }
   }
 
@@ -212,7 +260,16 @@ function checkValidity(showErrors: boolean) {
 }
 
 // TODO: education?
-// TODO: GDPR
+// TODO: *
+// TODO: farbblinde Error anzeigen
+// TODO: error for interest
+// TODO: rewrite quesion based on selected
+// TODO: interest
+// TODO: "agree?"
 // TODO: aria label
-// TODO: dB anbindung
+// TODO: unnötiges wie console.logs weggeben
+// TODO: success page
+// TODO: ausfüllen
+// TODO: bessere Formulierung für "mittlere"
+// TODO: GDPR
 </script>

@@ -1,9 +1,20 @@
 <template>
-  <div>
+  <div class="section">
     <AtomsHeadline :level="'h2'">Demographische Daten</AtomsHeadline>
-    <div class="flex flex-row space-x-4">
+    <div class="flex flex-row space-x-8 justify-center">
       <div class="my-4">
-        <label class="form-control w-full max-w-xs mb-1"> Geschlecht </label>
+        <label
+          class="form-control w-full max-w-xs mb-1 flex flex-row items-center"
+        >
+          <Icon
+            name="heroicons:exclamation-triangle"
+            size="18"
+            class="mr-2 hidden"
+            aria-label="Bitte ausfüllen"
+            data-error-icon="gender"
+          />
+          Geschlecht *
+        </label>
         <select
           class="select select-info select-bordered"
           name="gender"
@@ -17,8 +28,18 @@
         </select>
       </div>
       <div class="my-4">
-        <label class="form-control w-full max-w-xs mb-1" for="age">
-          Alter
+        <label
+          class="form-control w-full max-w-xs mb-1 flex flex-row items-center"
+          for="age"
+        >
+          <Icon
+            name="heroicons:exclamation-triangle"
+            size="18"
+            class="mr-2 hidden"
+            aria-label="Bitte ausfüllen"
+            data-error-icon="age"
+          />
+          Alter *
         </label>
         <input
           type="number"
@@ -37,9 +58,4 @@
 import type { gender, age } from "~/types/survey.type";
 const gender = useState<gender>("gender", () => "");
 const age = useState<age>("age", () => "");
-// const age = useState('age', ():number => -1);
-// const surveyResponse = useState("surveyResponse");
-// console.log("demographics", surveyResponse);
-// surveyResponse.value.age = age.value;
-// console.log("surveyResponse.age", surveyResponse.value.age);
 </script>

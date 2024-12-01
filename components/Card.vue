@@ -13,8 +13,8 @@
       <AtomsHeadline
         v-if="isQuestionSelected"
         :level="'h4'"
-        :icon-name="'heroicons:check-circle-20-solid'"
-        :icon-color="'bg-success'"
+        icon-name="heroicons:check-circle-20-solid"
+        icon-color="bg-success"
         >{{ content.headline }}</AtomsHeadline
       >
       <AtomsText>{{ content.text }}</AtomsText>
@@ -34,7 +34,8 @@
 
 <script setup lang="ts">
 import type { SummaryContent, SummaryType } from "~/types/question.type";
-const surveyResponse = useState("surveyResponse");
+import type { surveyResponseType } from "~/types/survey.type";
+const surveyResponse = useState<surveyResponseType>("surveyResponse");
 
 const props = defineProps<{
   content: SummaryContent;
@@ -80,9 +81,11 @@ const getOrder = computed(() => {
 const selectCard = () => {
   const question = document.querySelector(`[data-question-id='${props.id}']`);
   question?.classList.remove("form-error");
-  const selectedCard = props.id + props.type;
+  const errorMsg = document.querySelector(
+    `[data-question-id='${props.id}'].error-msg`
+  );
+  errorMsg?.classList.add("hidden");
   surveyResponse.value.articles[props.id].selectedSummary = props.type;
   surveyResponse.value.articles[props.id].id = props.id;
-  console.log("survey id", props.id, surveyResponse.value.articles[props.id]);
 };
 </script>

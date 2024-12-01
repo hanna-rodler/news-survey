@@ -24,6 +24,7 @@
   "dependencies": {
     "@nuxt/icon": "^1.8.2",
     "fs": "^0.0.1-security",
+    "mongodb": "^6.11.0",
     "nuxt": "^3.14.1592",
     "path": "^0.12.7",
     "typescript": "^5.7.2",
