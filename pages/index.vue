@@ -14,18 +14,19 @@
       <AtomsHeadline level="h2"
         >Emotionale Kapazität & Artikelversionen</AtomsHeadline
       >
-      <div class="flex flex-col mb-8">
+      <div class="flex flex-col mb-6">
         <label for="emotionalCapacity" class="flex flex-row justify-center"
-          ><AtomsHeadline level="h3"
+          ><AtomsHeadline level="h3" class="mb-3"
             >Wie viel emotionale Kapazität haben Sie gerade, um mit politischen
             Nachrichten umzugehen? *</AtomsHeadline
           ></label
         >
         <div
-          class="text-small text-center mb-2"
+          class="text-small text-center mb-2 flex items-center justify-center"
           v-if="emotionalCapacity === -1"
         >
-          Bitte auswählen
+          <Icon name="heroicons:exclamation-triangle" size="18" class="mr-2" />
+          <span>Bitte auswählen</span>
         </div>
         <div class="flex flex-row justify-center">
           <span class="mr-4 text-bold">sehr wenig</span>
@@ -58,16 +59,18 @@
     <div v-for="question of shuffledData" v-bind:key="question.id">
       <Question :content="question"></Question>
     </div>
-    <div v-if="!isValid" class="text-error text-center">
-      Bitte füllen Sie alle Fragen aus.
-    </div>
-    <div class="mt-5 flex justify-center flex-row">
-      <AtomsButton :tag="'button'" :variant="'gradient'" @click="submitForm">
-        Abschicken
-        <!-- <span class="flex justify-center items-center ml-2">
-          <Icon name="heroicons:paper-airplane" class="bg-white" />
-        </span> -->
-      </AtomsButton>
+    <div class="section">
+      <div v-if="!isValid" class="text-error text-center">
+        Bitte füllen Sie alle Fragen aus.
+      </div>
+      <div class="mt-5 flex justify-center flex-row">
+        <AtomsButton :tag="'button'" :variant="'gradient'" @click="submitForm">
+          Abschicken
+          <!-- <span class="flex justify-center items-center ml-2">
+            <Icon name="heroicons:paper-airplane" class="bg-white" />
+          </span> -->
+        </AtomsButton>
+      </div>
     </div>
   </div>
 </template>

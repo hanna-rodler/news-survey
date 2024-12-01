@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="mb-20 flex flex-col bg-white rounded-md p-5"
-    :data-question-id="content.id"
-  >
+  <div class="flex flex-col section mb-6" :data-question-id="content.id">
     <div class="flex flex-row justify-center">
       <AtomsHeadline :level="'h3'" class="max-w-4xl"
         >Sie haben angegeben im Moment
@@ -38,11 +35,14 @@
         :order="randomizedOrder[1]"
       ></Card>
     </div>
-    <div class="mt-8 text-center">
+    <div class="mt-10 mb-6 text-center">
       <div class="mb-2">
         <div class="font-medium">
           <label for="interest">
-            Wie sehr interessiert Sie das Thema des Artikels? *
+            <AtomsHeadline level="h3"
+              >Wie sehr interessiert Sie das Thema des Artikels?
+              *</AtomsHeadline
+            >
           </label>
         </div>
         <div
