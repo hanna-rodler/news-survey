@@ -30,20 +30,18 @@
         </div>
         <div class="flex flex-row justify-center">
           <span class="mr-4 text-bold">sehr wenig</span>
-          <div class="w-60">
+          <div class="w-48 md:w-60">
             <input
               type="range"
               min="0"
               max="4"
-              class="range range-primary"
+              class="range range-primary range-sm sm:range-md"
               :class="{ 'range-error': emotionalCapacity === -1 }"
               step="1"
               id="emotionalCapacity"
               name="emotionalCapacity"
               v-model="emotionalCapacity"
-              @click="chooseEmotionalCapacity"
-              @keyup.left="chooseEmotionalCapacity"
-              @keyup.right="chooseEmotionalCapacity"
+              @input="chooseEmotionalCapacity"
             />
             <div class="flex w-full justify-between px-2 text-xs">
               <span>|</span>
@@ -68,9 +66,6 @@
       <div class="mt-5 flex justify-center flex-row">
         <AtomsButton tag="button" variant="gradient" @click="submitForm">
           Abschicken
-          <!-- <span class="flex justify-center items-center ml-2">
-            <Icon name="heroicons:paper-airplane" class="bg-white" />
-          </span> -->
         </AtomsButton>
       </div>
     </div>
@@ -242,6 +237,12 @@ function checkValidity(showErrors: boolean) {
       articlesValid = false;
     }
     if (articles[i].interest === -1) {
+      console.log(
+        "article ",
+        i,
+        "has no selected interest:",
+        articles[i].interest
+      );
       articlesValid = false;
       // info: if selected is already shown for range
     }

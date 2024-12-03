@@ -52,20 +52,18 @@
       </div>
       <div class="flex flex-row justify-center">
         <span class="mr-4">sehr wenig</span>
-        <div class="w-60">
+        <div class="w-48 md:w-60">
           <input
             type="range"
             min="0"
             max="4"
-            class="range range-info"
+            class="range range-info range-sm md:range-md"
             :class="{ 'range-error': interest === -1 }"
             step="1"
             id="interest"
             name="interest"
             v-model="interest"
-            @click="chooseInterest"
-            @keyup.left="chooseInterest"
-            @keyup.right="chooseInterest"
+            @input="chooseInterest"
           />
           <div class="flex w-full justify-between px-2 text-xs">
             <span>|</span>

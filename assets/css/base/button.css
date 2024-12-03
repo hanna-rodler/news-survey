@@ -18,8 +18,8 @@
   @apply text-white bg-secondary;
 }
 
-.button-secondary:focus-visible {
-  @apply text-white bg-secondary;
+.button-secondary:focus {
+  @apply text-white bg-secondary font-semibold;
 }
 
 .button-accent {
@@ -38,7 +38,7 @@
   @apply text-success bg-white;
 }
 
-.button-success:focus-visible {
+.button-success:focus {
   @apply text-success bg-white font-semibold;
 }
 
