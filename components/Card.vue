@@ -7,12 +7,12 @@
     :style="getOrder"
   >
     <div>
-      <AtomsHeadline v-if="!isQuestionSelected" :level="'h4'">{{
+      <AtomsHeadline v-if="!isQuestionSelected" level="h4">{{
         content.headline
       }}</AtomsHeadline>
       <AtomsHeadline
         v-if="isQuestionSelected"
-        :level="'h4'"
+        level="h4"
         icon-name="heroicons:check-circle-20-solid"
         icon-color="bg-success"
         >{{ content.headline }}</AtomsHeadline
@@ -21,7 +21,7 @@
     </div>
     <div class="flex justify-end pt-4">
       <AtomsButton
-        :tag="'button'"
+        tag="button"
         :variant="buttonVariant"
         class="justify-self-end"
         @click="selectCard"

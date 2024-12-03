@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col section mb-6" :data-question-id="content.id">
     <div class="flex flex-row justify-center">
-      <AtomsHeadline :level="'h3'" class="max-w-4xl"
+      <AtomsHeadline level="h3" class="max-w-4xl"
         >Sie haben angegeben im Moment
         <em>{{ getCapacityDescription }}</em> emotionale Kapaztität für
         politische Nachrichten. Welche der drei Artikelversionen passt am Besten
@@ -18,19 +18,19 @@
     <div class="space-y-5 md:grid md:grid-cols-3 md:gap-x-3 md:space-y-0">
       <Card
         :content="content.soft_summary"
-        :type="'soft_summary'"
+        type="soft_summary"
         :id="content.id"
         :order="randomizedOrder[2]"
       ></Card>
       <Card
         :content="content.summary"
-        :type="'summary'"
+        type="summary"
         :id="content.id"
         :order="randomizedOrder[0]"
       ></Card>
       <Card
         :content="content.original"
-        :type="'original'"
+        type="original"
         :id="content.id"
         :order="randomizedOrder[1]"
       ></Card>

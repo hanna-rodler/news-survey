@@ -1,6 +1,6 @@
 <template>
   <div class="section">
-    <AtomsHeadline :level="'h2'">Demographische Daten</AtomsHeadline>
+    <AtomsHeadline level="h2">Demographische Daten</AtomsHeadline>
     <div class="flex flex-row space-x-8 justify-center">
       <div class="my-4">
         <label
