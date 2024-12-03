@@ -79,7 +79,6 @@
 
 <script setup lang="ts">
 import surveyData from "~/contents/survey.json";
-import { v4 as uuidv4 } from "uuid";
 
 import type {
   surveyResponseType,
@@ -88,9 +87,6 @@ import type {
   emotionalCapacity,
   articleSelection,
 } from "~/types/survey.type";
-
-const COLLECTION = useRuntimeConfig().private.SURVEY_COLLECTION;
-console.log("COLLECTION");
 
 let shuffledData = useNuxtApp().payload.data.shuffled;
 
@@ -115,8 +111,6 @@ const chooseEmotionalCapacity = () => {
     emotionalCapacity.value = 0;
   }
 };
-
-const userId = useState("userId", () => uuidv4());
 
 function shuffleArray<T>(array: T[]): T[] {
   // Create a copy of the array to avoid mutating the original array
@@ -152,7 +146,6 @@ const responseScheme: surveyResponseType = {
   age: age.value,
   gender: gender.value,
   emotionalCapacity: emotionalCapacity.value,
-  userId: userId.value,
 };
 
 const surveyResponse = useState<surveyResponseType>(
