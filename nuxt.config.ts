@@ -18,6 +18,9 @@ export default defineNuxtConfig({
       MONGO_DB_URL_START: process.env.MONGO_DB_URL_START,
       MONGO_DB_USER: process.env.MONGO_DB_USER,
       MONGO_DB_PW: process.env.MONGO_DB_PW,
+      MONGO_DB_SURVEY_COLLECTION: process.env.MONGO_DB_SURVEY_COLLECTION,
+      MONGO_DB_REGISTRATION_COLLECTION:
+        process.env.MONGO_DB_REGISTRATION_COLLECTION,
     },
   },
 });

@@ -64,7 +64,7 @@
         Bitte füllen Sie alle Fragen aus.
       </div>
       <div class="mt-5 flex justify-center flex-row">
-        <AtomsButton :tag="'button'" :variant="'gradient'" @click="submitForm">
+        <AtomsButton tag="button" variant="gradient" @click="submitForm">
           Abschicken
           <!-- <span class="flex justify-center items-center ml-2">
             <Icon name="heroicons:paper-airplane" class="bg-white" />
@@ -262,16 +262,11 @@ function checkValidity(showErrors: boolean) {
   return allValid;
 }
 
+// TODO: success page
 // TODO: education?
-// TODO: *
-// TODO: farbblinde Error anzeigen
-// TODO: error for interest
-// TODO: rewrite quesion based on selected
-// TODO: interest
-// TODO: "agree?"
+// TODO: test DB errors & success Message
 // TODO: aria label
 // TODO: unnötiges wie console.logs weggeben
-// TODO: success page
 // TODO: ausfüllen
 // TODO: bessere Formulierung für "mittlere"
 // TODO: GDPR
