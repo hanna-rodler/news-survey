@@ -42,6 +42,8 @@
               name="emotionalCapacity"
               v-model="emotionalCapacity"
               @click="chooseEmotionalCapacity"
+              @keyup.left="chooseEmotionalCapacity"
+              @keyup.right="chooseEmotionalCapacity"
             />
             <div class="flex w-full justify-between px-2 text-xs">
               <span>|</span>
@@ -195,7 +197,6 @@ function checkValidity(showErrors: boolean) {
   // validate age
   const ageInput = document.querySelector("input[name='age']");
   const ageErrorIcon = document.querySelector("[data-error-icon='age']");
-  console.log("age error", ageErrorIcon);
   if (age.value === "" || age.value < 5 || age.value > 120) {
     if (showErrors) {
       ageInput?.classList.remove("input-info");

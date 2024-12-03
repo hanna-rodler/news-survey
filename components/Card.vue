@@ -1,6 +1,6 @@
 <template>
   <div
-    class="form-card border-2 bg-white shadow-lg p-4 flex flex-col justify-between"
+    class="form-card border-2 bg-white shadow-md p-4 flex flex-col justify-between"
     :data-summary-type="type"
     :class="getBorderColor"
     :data-id="id"
