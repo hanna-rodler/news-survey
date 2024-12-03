@@ -22,4 +22,7 @@ export default defineNuxtConfig({
       REGISTRATION_COLLECTION: process.env.REGISTRATION_COLLECTION,
     },
   },
+  app: {
+    baseURL: process.env.NUXT_APP_BASE_URL,
+  },
 });
