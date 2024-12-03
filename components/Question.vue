@@ -67,6 +67,8 @@
             name="interest"
             v-model="interest"
             @click="chooseInterest"
+            @keyup.left="chooseInterest"
+            @keyup.right="chooseInterest"
           />
           <div class="flex w-full justify-between px-2 text-xs">
             <span>|</span>
