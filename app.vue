@@ -3,3 +3,7 @@
     <NuxtPage />
   </main>
 </template>
+
+<script>
+useHead({ title: "Artikel Umfrage" });
+</script>
