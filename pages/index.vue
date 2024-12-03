@@ -164,7 +164,6 @@ const submitForm = () => {
 
   const submitValid = checkValidity(true);
   if (submitValid) {
-    console.log("surveyResponse", surveyResponse);
     saveToDB();
   } else {
     console.error("errors occured");
@@ -237,7 +236,6 @@ function checkValidity(showErrors: boolean) {
   for (let i = 0; i < articles.length; i++) {
     if (articles[i].selectedSummary === "") {
       if (showErrors) {
-        console.log("question i", i, " is missing: ", articles[i]);
         const question = document.querySelector(`[data-question-id='${i}']`);
         question?.classList.add("form-error");
         const errorMsg = document.querySelector(
@@ -249,7 +247,6 @@ function checkValidity(showErrors: boolean) {
     }
     if (articles[i].interest === -1) {
       articlesValid = false;
-      console.log("question i", i, "has no selected intterest");
       // info: if selected is already shown for range
     }
   }
@@ -263,12 +260,10 @@ function checkValidity(showErrors: boolean) {
   return allValid;
 }
 
-// TODO: success page
 // TODO: education?
-// TODO: test DB errors & success Message
 // TODO: aria label
-// TODO: unnötiges wie console.logs weggeben
 // TODO: ausfüllen
 // TODO: bessere Formulierung für "mittlere"
 // TODO: GDPR
+// TODO: "Die Studie kann jederzeit wiederholt werden."
 </script>

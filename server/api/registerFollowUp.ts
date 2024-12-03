@@ -5,7 +5,6 @@ const COLLECTION = useRuntimeConfig().private.REGISTRATION_COLLECTION;
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   try {
-    console.log("body", body);
     await connectToDatabase();
     const collection = db.collection(COLLECTION);
     const result = await collection.insertOne(body);

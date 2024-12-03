@@ -172,7 +172,6 @@ async function copyUrl() {
     // Use the Clipboard API to copy the URL
     await navigator.clipboard.writeText(baseUrl);
 
-    console.log("Base URL copied to clipboard:", baseUrl);
     showCopied.value = true;
     setTimeout(() => {
       showCopied.value = false;
