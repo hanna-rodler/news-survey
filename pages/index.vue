@@ -89,6 +89,9 @@ import type {
   articleSelection,
 } from "~/types/survey.type";
 
+const COLLECTION = useRuntimeConfig().private.SURVEY_COLLECTION;
+console.log("COLLECTION");
+
 let shuffledData = useNuxtApp().payload.data.shuffled;
 
 if (shuffledData == undefined) {
