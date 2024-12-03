@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - github-pages-deployment
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,17 +15,18 @@ jobs:
         with:
           node-version: "20"
       # Set up environment variables from secrets
-      - name: Set up environment variables
-        run: |
-          echo "NUXT_APP_BASE_URL=${{ secrets.NUXT_APP_BASE_URL }}" >> $GITHUB_ENV
-          echo "NUXT_MONGO_DB_USER=${{ secrets.NUXT_MONGO_DB_USER }}" >> $GITHUB_ENV
-          echo "NUXT_MONGO_DB_PW=${{ secrets.NUXT_MONGO_DB_PW }}" >> $GITHUB_ENV
-          echo "NUXT_MONGO_DB_URL_END=${{ secrets.NUXT_MONGO_DB_URL_END }}" >> $GITHUB_ENV
-          echo "NUXT_MONGO_DB_URL_START=${{ secrets.NUXT_MONGO_DB_URL_START }}" >> $GITHUB_ENV
-          echo "NUXT_REGISTRATION_COLLECTION=${{ secrets.NUXT_REGISTRATION_COLLECTION }}" >> $GITHUB_ENV
-          echo "NUXT_SURVEY_COLLECTION=${{ secrets.NUXT_SURVEY_COLLECTION }}" >> $GITHUB_ENV
-      - run: npm install
-      - run: npx nuxt build --preset github_pages
+      - name: Install dependencies
+        run: npm install
+      - name: Build project
+        run: npx nuxt build --preset github_pages
+        env:
+          NUXT_APP_BASE_URL: ${{ secrets.NUXT_APP_BASE_URL }}
+          NUXT_MONGO_DB_USER: ${{ secrets.NUXT_MONGO_DB_USER }}
+          NUXT_MONGO_DB_PW: ${{ secrets.NUXT_MONGO_DB_PW }}
+          NUXT_MONGO_DB_URL_END: ${{ secrets.NUXT_MONGO_DB_URL_END }}
+          NUXT_MONGO_DB_URL_START: ${{ secrets.NUXT_MONGO_DB_URL_START }}
+          NUXT_REGISTRATION_COLLECTION: ${{ secrets.NUXT_REGISTRATION_COLLECTION }}
+          NUXT_SURVEY_COLLECTION: ${{ secrets.NUXT_SURVEY_COLLECTION }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
