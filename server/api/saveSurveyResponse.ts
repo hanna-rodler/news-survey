@@ -1,8 +1,8 @@
-import { connectToDatabase, db, closeDatabase } from "../surveyDatabase";
+import { connectToDatabase, db, closeDatabase } from "../database";
 import { readBody } from "h3";
+const COLLECTION = useRuntimeConfig().private.SURVEY_COLLECTION;
 
 export default defineEventHandler(async (event) => {
-  const COLLECTION = useRuntimeConfig().env.MONGO_DB_SURVEY_COLLECTION;
   const body = await readBody(event);
   try {
     await connectToDatabase();

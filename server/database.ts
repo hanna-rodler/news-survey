@@ -6,6 +6,7 @@ const USER = useRuntimeConfig().private.MONGO_DB_USER;
 
 const uri = URL_START + USER + ":" + SECRET + URL_END;
 
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
