@@ -1,8 +1,8 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
-const URL_START = useRuntimeConfig().private.MONGO_DB_URL_START;
-const URL_END = useRuntimeConfig().private.MONGO_DB_URL_END;
-const SECRET = useRuntimeConfig().private.MONGO_DB_PW;
-const USER = useRuntimeConfig().private.MONGO_DB_USER;
+const URL_START = useRuntimeConfig().private.NUXT_MONGO_DB_URL_START;
+const URL_END = useRuntimeConfig().private.NUXT_MONGO_DB_URL_END;
+const SECRET = useRuntimeConfig().private.NUXT_MONGO_DB_PW;
+const USER = useRuntimeConfig().private.NUXT_MONGO_DB_USER;
 
 const uri = URL_START + USER + ":" + SECRET + URL_END;
 

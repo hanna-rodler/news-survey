@@ -1,6 +1,6 @@
 import { connectToDatabase, db, closeDatabase } from "../database";
 import { readBody } from "h3";
-const COLLECTION = useRuntimeConfig().private.SURVEY_COLLECTION;
+const COLLECTION = useRuntimeConfig().private.NUXT_SURVEY_COLLECTION;
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);

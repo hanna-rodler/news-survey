@@ -10,7 +10,6 @@ export type surveyResponseType = {
   age: age;
   articles: [articleSelection];
   emotionalCapacity: emotionalCapacity;
-  userId: string;
 };
 
 export type articleSelection = {

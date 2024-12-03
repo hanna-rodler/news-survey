@@ -14,12 +14,15 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {},
     private: {
-      MONGO_DB_URL_END: process.env.NUXT_MONGO_DB_URL_END,
-      MONGO_DB_URL_START: process.env.NUXT_MONGO_DB_URL_START,
-      MONGO_DB_USER: process.env.NUXT_MONGO_DB_USER,
-      MONGO_DB_PW: process.env.NUXT_MONGO_DB_PW,
-      SURVEY_COLLECTION: process.env.NUXT_SURVEY_COLLECTION,
-      REGISTRATION_COLLECTION: process.env.NUXT_REGISTRATION_COLLECTION,
+      NUXT_MONGO_DB_URL_END: process.env.NUXT_MONGO_DB_URL_END,
+      NUXT_MONGO_DB_URL_START: process.env.NUXT_MONGO_DB_URL_START,
+      NUXT_MONGO_DB_USER: process.env.NUXT_MONGO_DB_USER,
+      NUXT_MONGO_DB_PW: process.env.NUXT_MONGO_DB_PW,
+      NUXT_SURVEY_COLLECTION: process.env.NUXT_SURVEY_COLLECTION,
+      NUXT_REGISTRATION_COLLECTION: process.env.NUXT_REGISTRATION_COLLECTION,
     },
+  },
+  app: {
+    baseURL: process.env.NUXT_APP_BASE_URL,
   },
 });
