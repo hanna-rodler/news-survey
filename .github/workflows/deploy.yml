@@ -14,8 +14,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Use deployment environment
-        run: cp .env.dev .env
+      # Set up environment variables from secrets
+      - name: Set up environment variables
+        run: |
+          echo "NUXT_APP_BASE_URL=${{ secrets.NUXT_APP_BASE_URL }}" >> $GITHUB_ENV
+          echo "NUXT_MONGO_DB_USER=${{ secrets.NUXT_MONGO_DB_USER }}" >> $GITHUB_ENV
+          echo "NUXT_MONGO_DB_PW=${{ secrets.NUXT_MONGO_DB_PW }}" >> $GITHUB_ENV
+          echo "NUXT_MONGO_DB_URL_END=${{ secrets.NUXT_MONGO_DB_URL_END }}" >> $GITHUB_ENV
+          echo "NUXT_MONGO_DB_URL_START=${{ secrets.NUXT_MONGO_DB_URL_START }}" >> $GITHUB_ENV
+          echo "NUXT_REGISTRATION_COLLECTION=${{ secrets.NUXT_REGISTRATION_COLLECTION }}" >> $GITHUB_ENV
+          echo "NUXT_SURVEY_COLLECTION=${{ secrets.NUXT_SURVEY_COLLECTION }}" >> $GITHUB_ENV
       - run: npm install
       - run: npx nuxt build --preset github_pages
       - name: Upload artifact
