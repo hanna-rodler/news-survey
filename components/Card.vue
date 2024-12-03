@@ -4,7 +4,6 @@
     :data-summary-type="type"
     :class="getBorderColor"
     :data-id="id"
-    :style="getOrder"
   >
     <div>
       <AtomsHeadline v-if="!isQuestionSelected" level="h4">{{
@@ -41,7 +40,6 @@ const props = defineProps<{
   content: SummaryContent;
   type: SummaryType;
   id: number;
-  order?: number;
 }>();
 
 const isQuestionSelected = computed(() => {
@@ -70,12 +68,6 @@ const getBorderColor = computed(() => {
   } else {
     return "border-info rounded-md";
   }
-});
-
-const getOrder = computed(() => {
-  const order =
-    props.order === undefined ? "order: 0" : `order: ${props.order}`;
-  return order;
 });
 
 const selectCard = () => {

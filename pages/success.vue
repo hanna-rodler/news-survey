@@ -58,6 +58,7 @@
               class="checkbox checkbox-primary mr-2"
               for="updateMe"
               v-model="updateMe"
+              @keyup.enter="toggleUpdateMe"
             />
             <span class="">Halte mich am Laufen</span>
           </label>
@@ -72,6 +73,7 @@
               class="checkbox checkbox-primary mr-2"
               v-model="studyParticipation"
               id="studyParticipation"
+              @keyup.enter="toggleStudyParticipation"
             />
             <span class="">Kontaktiere mich für eine Folgetudie</span>
           </label>
@@ -84,6 +86,11 @@
           </div>
         </div>
       </div>
+      <AtomsText class="text-xs block mt-4 max-w-md" v-if="!showSuccessMessage">
+        Die Kontaktdaten werden nur im Zuge dieser Masterarbeit für den Zweck,
+        den sie angehakt haben, verwendet. Nach der Vollendung der Masterarbeit,
+        spätestens im September 2025, werden die Daten gelöscht.
+      </AtomsText>
       <div v-if="showSuccessMessage" class="text-center mt-5">Dankeschön!</div>
       <div class="toast toast-end" v-if="showCopied">
         <div class="alert bg-white text-black">Kopiert</div>
@@ -101,13 +108,14 @@ const checkboxError = ref(false);
 const emailError = ref(false);
 const showSuccessMessage = ref(false);
 const showCopied = ref(false);
-const getTooltipClass = computed(() => {
-  if (showCopied) {
-    return "tooltip-open";
-  } else {
-    return "tooltip-closed";
-  }
-});
+
+function toggleStudyParticipation() {
+  studyParticipation.value = !studyParticipation.value;
+}
+
+function toggleUpdateMe() {
+  updateMe.value = !updateMe.value;
+}
 
 function submitForm() {
   if (

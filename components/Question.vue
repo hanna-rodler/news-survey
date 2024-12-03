@@ -17,22 +17,19 @@
     </div>
     <div class="space-y-5 md:grid md:grid-cols-3 md:gap-x-3 md:space-y-0">
       <Card
-        :content="content.soft_summary"
-        type="soft_summary"
+        :content="content[shuffledArray[0]]"
+        :type="shuffledArray[0]"
         :id="content.id"
-        :order="randomizedOrder[2]"
       ></Card>
       <Card
-        :content="content.summary"
-        type="summary"
+        :content="content[shuffledArray[1]]"
+        :type="shuffledArray[1]"
         :id="content.id"
-        :order="randomizedOrder[0]"
       ></Card>
       <Card
-        :content="content.original"
-        type="original"
+        :content="content[shuffledArray[2]]"
+        :type="shuffledArray[2]"
         :id="content.id"
-        :order="randomizedOrder[1]"
       ></Card>
     </div>
     <div class="mt-10 mb-6 text-center">
@@ -85,7 +82,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Question } from "~/types/question.type";
+import type { Question, SummaryType } from "~/types/question.type";
 import type {
   emotionalCapacity,
   interest,
@@ -95,8 +92,6 @@ import type {
 const emotionalCapacity = useState<emotionalCapacity>("emotionalCapacity");
 const surveyResponse = useState<surveyResponseType>("surveyResponse");
 const interest = ref<interest>(-1);
-
-console.log("interest", interest.value);
 
 const capacityMapper = new Map([
   [0, "sehr wenig"],
@@ -114,23 +109,26 @@ const props = defineProps<{
   content: Question;
 }>();
 
-const randomizedOrder = computed(() => {
-  let rand1 = Math.floor(Math.random() * 3);
-  if (rand1 === 0) {
-    rand1 = -1;
+const summaryTypes: [SummaryType, SummaryType, SummaryType] = [
+  "soft_summary",
+  "softer_summary",
+  "original",
+];
+const shuffledArray = shuffleArray(summaryTypes);
+
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array]; // Create a copy of the array
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const randomIndex = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[i]];
   }
-  let rand2 = Math.floor(Math.random() * 3);
-  let rand3 = Math.floor(Math.random() * 3);
-  const ranOrders = [rand1, rand2, rand3];
-  return ranOrders;
-});
+  return shuffled;
+}
 
 const chooseInterest = () => {
   if (interest.value === -1) {
     interest.value = 0;
   }
-  surveyResponse.value.articles[props.content.id].interest = Number(
-    interest.value
-  );
+  surveyResponse.value.articles[props.content.id].interest = interest.value;
 };
 </script>

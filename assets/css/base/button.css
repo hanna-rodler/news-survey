@@ -18,6 +18,10 @@
   @apply text-white bg-secondary;
 }
 
+.button-secondary:focus-visible {
+  @apply text-white bg-secondary;
+}
+
 .button-accent {
   @apply bg-accent text-white py-1 px-5 min-w-12 rounded-md border-2 border-accent;
 }
@@ -32,6 +36,10 @@
 
 .button-success:hover {
   @apply text-success bg-white;
+}
+
+.button-success:focus-visible {
+  @apply text-success bg-white font-semibold;
 }
 
 .button-gradient {
