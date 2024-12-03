@@ -79,7 +79,6 @@
 
 <script setup lang="ts">
 import surveyData from "~/contents/survey.json";
-import { v4 as uuidv4 } from "uuid";
 
 import type {
   surveyResponseType,
@@ -112,8 +111,6 @@ const chooseEmotionalCapacity = () => {
     emotionalCapacity.value = 0;
   }
 };
-
-const userId = useState("userId", () => uuidv4());
 
 function shuffleArray<T>(array: T[]): T[] {
   // Create a copy of the array to avoid mutating the original array
@@ -149,7 +146,6 @@ const responseScheme: surveyResponseType = {
   age: age.value,
   gender: gender.value,
   emotionalCapacity: emotionalCapacity.value,
-  userId: userId.value,
 };
 
 const surveyResponse = useState<surveyResponseType>(
