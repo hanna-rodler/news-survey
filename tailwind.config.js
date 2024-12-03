@@ -25,6 +25,10 @@ export default {
   plugins: [
     require('daisyui')
   ],
+  buildModules: [
+    '@nuxtjs/tailwindcss',
+    'nuxt-icon',
+  ],
   daisyui: {
     themes: [
       {
