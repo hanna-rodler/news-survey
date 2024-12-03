@@ -29,7 +29,7 @@
           <span>Bitte auswählen</span>
         </div>
         <div class="flex flex-row justify-center">
-          <span class="mr-4 text-bold">sehr wenig</span>
+          <span class="mr-2 sm:mr-4">sehr wenig</span>
           <div class="w-48 md:w-60">
             <input
               type="range"
@@ -51,7 +51,7 @@
               <span>|</span>
             </div>
           </div>
-          <span class="ml-4 text-bold">sehr viel</span>
+          <span class="ml-2 sm:ml-4">sehr viel</span>
         </div>
       </div>
     </div>
