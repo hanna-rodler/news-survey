@@ -10,6 +10,10 @@
   @apply text-primary bg-white;
 }
 
+.button-primary:focus {
+  @apply text-primary bg-white;
+}
+
 .button-secondary {
   @apply bg-white text-secondary py-1 px-5 min-w-12 rounded-md border-2 border-secondary;
 }
