@@ -29,6 +29,7 @@ export default defineNuxtConfig({
       NUXT_SURVEY_COLLECTION: process.env.NUXT_SURVEY_COLLECTION,
       NUXT_REGISTRATION_COLLECTION: process.env.NUXT_REGISTRATION_COLLECTION,
       NUXT_APP_BASE_URL: process.env.NUXT_APP_BASE_URL,
+      NUXT_MISTRAL_API_KEY: process.env.NUXT_MISTRAL_API_KEY,
     },
   },
   app: {
