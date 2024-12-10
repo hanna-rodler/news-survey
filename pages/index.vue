@@ -15,7 +15,10 @@
         >Emotionale Kapazität & Artikelversionen</AtomsHeadline
       >
       <div class="flex flex-col mb-6">
-        <label for="emotionalCapacity" class="flex flex-row justify-center"
+        <label
+          for="emotionalCapacity"
+          class="flex flex-row justify-center"
+          id="emotional-capacity-label"
           ><AtomsHeadline level="h3" class="mb-3"
             >Wie viel emotionale Kapazität haben Sie gerade, um mit politischen
             Nachrichten umzugehen? *</AtomsHeadline
@@ -25,11 +28,18 @@
           class="text-small text-center mb-2 flex items-center justify-center"
           v-if="emotionalCapacity === -1"
         >
-          <Icon name="heroicons:exclamation-triangle" size="18" class="mr-2" />
-          <span>Bitte auswählen</span>
+          <Icon
+            name="heroicons:exclamation-triangle"
+            size="18"
+            class="mr-2"
+            aria-hidden="true"
+          />
+          <span id="emotional-capacity-error">Bitte auswählen</span>
         </div>
         <div class="flex flex-row justify-center">
-          <span class="mr-2 sm:mr-4">sehr wenig</span>
+          <span class="mr-2 sm:mr-4" id="emotional-capacity-range-start"
+            >sehr wenig</span
+          >
           <div class="w-48 md:w-60">
             <input
               type="range"
@@ -42,6 +52,15 @@
               name="emotionalCapacity"
               v-model="emotionalCapacity"
               @input="chooseEmotionalCapacity"
+              :aria-valuemin="0"
+              :aria-valuemax="4"
+              :aria-valuenow="emotionalCapacity"
+              aria-labelledby="emotional-capacity-label"
+              :aria-describedby="`emotional-capacity-range-start emotional-capacity-range-end ${
+                emotionalCapacity === -1
+                  ? `emotional-capacity-error`
+                  : 'emotional-capacity-label'
+              }`"
             />
             <div class="flex w-full justify-between px-2 text-xs">
               <span>|</span>
@@ -51,7 +70,9 @@
               <span>|</span>
             </div>
           </div>
-          <span class="ml-2 sm:ml-4">sehr viel</span>
+          <span class="ml-2 sm:ml-4" id="emotional-capacity-range-end"
+            >sehr viel</span
+          >
         </div>
       </div>
     </div>
@@ -60,11 +81,22 @@
       <Question :content="question"></Question>
     </div>
     <div class="section">
-      <div v-if="!isValid" class="text-error text-center">
+      <div
+        v-if="!isValid"
+        class="text-error text-center"
+        id="form-error-msg"
+        role="alert"
+      >
         Bitte füllen Sie alle Fragen aus.
       </div>
       <div class="mt-5 flex justify-center flex-row">
-        <AtomsButton tag="button" variant="gradient" @click="submitForm">
+        <AtomsButton
+          tag="button"
+          variant="gradient"
+          @click="submitForm"
+          aria-describedby="form-error-msg"
+          aria-label="Umfrage abschicken"
+        >
           Abschicken
         </AtomsButton>
       </div>
@@ -186,34 +218,40 @@ function checkValidity(showErrors: boolean) {
   };
   // validate age
   const ageInput = document.querySelector("input[name='age']");
+  const ageError = useState("ageError");
   const ageErrorIcon = document.querySelector("[data-error-icon='age']");
-  if (age.value === "" || age.value < 5 || age.value > 120) {
+  if (age.value === "" || age.value < 10 || age.value > 120) {
     if (showErrors) {
       ageInput?.classList.remove("input-info");
       ageInput?.classList.add("input-error");
       ageErrorIcon?.classList.remove("hidden");
+      ageError.value = true;
     }
   } else {
     validity.age = true;
     ageInput?.classList.remove("input-error");
     ageInput?.classList.add("input-info");
     ageErrorIcon?.classList.add("hidden");
+    ageError.value = false;
   }
 
   // validate gender
   const selectGender = document.querySelector("select[name='gender']");
   const genderErrorIcon = document.querySelector("[data-error-icon='gender']");
+  const genderError = useState("genderError");
   if (gender.value === "") {
     if (showErrors) {
       selectGender?.classList.remove("select-info");
       selectGender?.classList.add("select-error");
       genderErrorIcon?.classList.remove("hidden");
+      genderError.value = true;
     }
   } else {
     selectGender?.classList.add("select-info");
     selectGender?.classList.remove("select-error");
     genderErrorIcon?.classList.add("hidden");
     validity.gender = true;
+    genderError.value = false;
   }
 
   if (emotionalCapacity.value !== -1) {
@@ -237,12 +275,6 @@ function checkValidity(showErrors: boolean) {
       articlesValid = false;
     }
     if (articles[i].interest === -1) {
-      console.log(
-        "article ",
-        i,
-        "has no selected interest:",
-        articles[i].interest
-      );
       articlesValid = false;
       // info: if selected is already shown for range
     }
@@ -258,7 +290,6 @@ function checkValidity(showErrors: boolean) {
 }
 
 // TODO: education?
-// TODO: aria label
 // TODO: ausfüllen
 // TODO: bessere Formulierung für "mittlere"
 // TODO: GDPR

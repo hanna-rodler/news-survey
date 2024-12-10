@@ -4,19 +4,28 @@
     :data-summary-type="type"
     :class="getBorderColor"
     :data-id="id"
+    role="radio"
+    :aria-checked="isQuestionSelected"
   >
     <div>
-      <AtomsHeadline v-if="!isQuestionSelected" level="h4">{{
-        content.headline
-      }}</AtomsHeadline>
+      <AtomsHeadline
+        v-if="!isQuestionSelected"
+        level="h4"
+        :id="`card-${id}-${type}-title`"
+        >{{ content.headline }}</AtomsHeadline
+      >
       <AtomsHeadline
         v-if="isQuestionSelected"
         level="h4"
         icon-name="heroicons:check-circle-20-solid"
         icon-color="bg-success"
+        :aria-label="`selected-${content.headline}`"
+        :id="`card-${id}-${type}-title`"
         >{{ content.headline }}</AtomsHeadline
       >
-      <AtomsText>{{ content.text }}</AtomsText>
+      <AtomsText :id="`card-${id}-${type}-content`">{{
+        content.text
+      }}</AtomsText>
     </div>
     <div class="flex justify-end pt-4">
       <AtomsButton
@@ -24,6 +33,7 @@
         :variant="buttonVariant"
         class="justify-self-end"
         @click="selectCard"
+        :aria-labelledby="`card-${id}-${type}-title card-${id}-${type}-content`"
       >
         {{ getButtonText }}
       </AtomsButton>
