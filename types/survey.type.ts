@@ -9,11 +9,18 @@ export type surveyResponseType = {
   gender: gender;
   age: age;
   articles: [articleSelection];
-  emotionalCapacity: emotionalCapacity;
+  currentEmotionalCapacity: emotionalCapacity;
+  generalEmotionalCapacity: emotionalCapacity;
 };
 
 export type articleSelection = {
   id: string;
   selectedSummary: "" | SummaryType;
   interest: interest;
+  remark: string;
+  order: {
+    0: SummaryType;
+    1: SummaryType;
+    2: SummaryType;
+  };
 };
