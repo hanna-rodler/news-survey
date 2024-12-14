@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col section mb-6"
+    class="flex flex-col mb-6"
     :data-question-id="content.id"
     role="region"
     :aria-labelledby="`question-${content.id}-title`"
@@ -12,9 +12,10 @@
         :id="`question-${content.id}-title`"
         :aria-describedby="`question-${content.id}-error`"
         >Sie haben angegeben im Moment
-        <em>{{ getCapacityDescription }}</em> emotionale Kapaztität für
-        politische Nachrichten. Welche der drei Artikelversionen passt am Besten
-        zu dieser emotionalen Kapazität? *</AtomsHeadline
+        <span class="underline">{{ getCapacityDescription }}</span> emotionale
+        Kapaztität für politische Nachrichten zu haben. Welche der drei
+        Artikelversionen passt am Besten zu dieser emotionalen Kapazität?
+        *</AtomsHeadline
       >
     </div>
     <div
@@ -55,6 +56,7 @@
           <label for="interest" id="interest-label">
             <AtomsHeadline
               level="h3"
+              class="mb-4"
               :aria-described-by="`question-${content.id}-interest-error`"
               >Wie sehr interessiert Sie das Thema des Artikels?
               *</AtomsHeadline
@@ -109,10 +111,28 @@
         <span class="ml-2 sm:ml-4" id="range-end">sehr viel</span>
       </div>
     </div>
+    <div class="mt-3 flex flex-row justify-center">
+      <label class="form-control w-96" :for="`question-${content.id}-textarea`">
+        <div class="label">
+          <AtomsHeadline level="h3" class="mb-1">
+            Haben Sie zusätzliche Anmerkungen?
+          </AtomsHeadline>
+          {{ remark }}
+        </div>
+        <textarea
+          class="textarea textarea-bordered h-24"
+          :id="`question-${content.id}-textarea`"
+          v-model="remark"
+          name="remark"
+          @input="debouncedSave"
+        ></textarea>
+      </label>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { debounce } from "lodash";
 import type { Question, SummaryType } from "~/types/question.type";
 import type {
   emotionalCapacity,
@@ -120,11 +140,15 @@ import type {
   surveyResponseType,
 } from "~/types/survey.type";
 
-const emotionalCapacity = useState<emotionalCapacity>("emotionalCapacity");
+const currentEmotionalCapacity = useState<emotionalCapacity>(
+  "currentEmotionalCapacity"
+);
 const surveyResponse = useState<surveyResponseType>("surveyResponse");
 const interest = ref<interest>(-1);
+const remark = ref<string>("");
 
 const capacityMapper = new Map([
+  [-1, "keine"],
   [0, "sehr wenig"],
   [1, "wenig"],
   [2, "eine mittlere"],
@@ -133,7 +157,7 @@ const capacityMapper = new Map([
 ]);
 
 const getCapacityDescription = computed(() => {
-  return capacityMapper.get(Number(emotionalCapacity.value));
+  return capacityMapper.get(Number(currentEmotionalCapacity.value));
 });
 
 const props = defineProps<{
@@ -162,4 +186,17 @@ const chooseInterest = () => {
   }
   surveyResponse.value.articles[props.content.id].interest = interest.value;
 };
+
+surveyResponse.value.articles[props.content.id].order = {
+  0: shuffledArray[0],
+  1: shuffledArray[1],
+  2: shuffledArray[2],
+};
+
+const debouncedSave = debounce(() => {
+  if (remark.value !== "") {
+    surveyResponse.value.articles[props.content.id].remark = remark.value;
+    console.log(surveyResponse.value.articles[props.content.id]);
+  }
+}, 300);
 </script>
