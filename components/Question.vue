@@ -132,7 +132,7 @@
 </template>
 
 <script setup lang="ts">
-import { debounce } from "lodash";
+import { useDebounceFn } from "@vueuse/core";
 import type { Question, SummaryType } from "~/types/question.type";
 import type {
   emotionalCapacity,
@@ -193,7 +193,7 @@ surveyResponse.value.articles[props.content.id].order = {
   2: shuffledArray[2],
 };
 
-const debouncedSave = debounce(() => {
+const debouncedSave = useDebounceFn(() => {
   if (remark.value !== "") {
     surveyResponse.value.articles[props.content.id].remark = remark.value;
     console.log(surveyResponse.value.articles[props.content.id]);
