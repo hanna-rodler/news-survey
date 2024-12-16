@@ -391,10 +391,8 @@ function checkValidity(showErrors: boolean) {
   return allValid;
 }
 
-// Question ebene: Textarea - in DB speichern kontrollieren
 // TODO: education?
 // TODO: ausfüllen
-// TODO: bessere Formulierung für "mittlere"
 // TODO: GDPR
 // TODO: "Die Studie kann jederzeit wiederholt werden."
 </script>

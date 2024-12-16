@@ -117,7 +117,6 @@
           <AtomsHeadline level="h3" class="mb-1">
             Haben Sie zusätzliche Anmerkungen?
           </AtomsHeadline>
-          {{ remark }}
         </div>
         <textarea
           class="textarea textarea-bordered h-24"
@@ -196,7 +195,6 @@ surveyResponse.value.articles[props.content.id].order = {
 const debouncedSave = useDebounceFn(() => {
   if (remark.value !== "") {
     surveyResponse.value.articles[props.content.id].remark = remark.value;
-    console.log(surveyResponse.value.articles[props.content.id]);
   }
 }, 300);
 </script>
