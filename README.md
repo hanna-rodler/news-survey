@@ -1,12 +1,23 @@
 # News Survey Tool
 
-TODO: add description
+This survey is used to match articles to user's emotional capacity.
+The articles form `contents/survey.json` are loaded into the application in randomized order, as well as randomized version order.
 
-## Nuxt Minimal Starter
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Start application
+Install npm packages:
+```bash
+npm i
+```
 
-### Production
+Run application locally:
+```bash
+# npm
+npm run dev
+```
+
+
+## Production
 
 Build the application for production:
 
